@@ -351,6 +351,7 @@ export function App() {
         <Footer
           mode={mode}
           activeView={activeView}
+          whatsappAdminNumber={settings.whatsappNumber}
           onNavigateSection={(selector) => scrollToTarget(selector)}
           onToggleAdmin={handleToggleAdmin}
         />

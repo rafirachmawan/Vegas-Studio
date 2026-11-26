@@ -8,6 +8,7 @@ import {
   formatTanggalIndonesia,
   formatTanggalSpreadsheet,
   formatThousandsInput,
+  getDateParts,
   parseRupiahInput,
 } from './formatters';
 
@@ -33,6 +34,13 @@ describe('formatters', () => {
     expect(formatTanggalIndonesia('2026-12-16')).toBe('Rabu, 16 Des 2026');
     expect(formatTanggalIndonesia('16/12/2026', false)).toBe('16 Des 2026');
     expect(formatTanggalIndonesia('2026-02-31')).toBe('2026-02-31');
+    expect(getDateParts('2026-11-07')).toEqual({
+      dayNumber: '07',
+      monthShort: 'Nov',
+      year: '2026',
+      weekday: 'Sabtu',
+    });
+    expect(getDateParts('invalid')).toBeNull();
   });
 
   it('menormalkan jam sesi, username IG, dan kolom No. WA & Bayar', () => {

@@ -11,7 +11,7 @@ body {
 
 html {
   scrollbar-color: var(--color-muted) var(--color-paper);
-  scroll-padding-top: var(--space-3xl);
+  scroll-padding-top: 4rem;
 }
 
 html.lenis,

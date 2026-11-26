@@ -166,7 +166,7 @@ export function Navbar({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-            className="border-t border-rule bg-card lg:hidden"
+            className="absolute inset-x-0 top-full border-b border-rule bg-card shadow-[var(--shadow-card)] lg:hidden"
           >
             <div className="container flex flex-col gap-3 py-4">
               <div

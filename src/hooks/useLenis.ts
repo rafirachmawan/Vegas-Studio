@@ -51,15 +51,37 @@ export function useLenisSmoothScroll() {
     };
   }, []);
 
-  const scrollToTarget = useCallback((target: string | HTMLElement, offset = -84) => {
-    const lenis = lenisRef.current;
-    if (lenis) {
-      lenis.scrollTo(target, { offset, duration: 0.9 });
+  const scrollToTarget = useCallback((target: string | HTMLElement) => {
+    if (target === '#top') {
+      if (lenisRef.current) {
+        lenisRef.current.scrollTo(0, { duration: 0.55 });
+      } else if (typeof window.scrollTo === 'function') {
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      }
       return;
     }
+
     const element =
       typeof target === 'string' ? document.querySelector<HTMLElement>(target) : target;
-    if (element && typeof element.scrollIntoView === 'function') {
+    if (!element) {
+      return;
+    }
+
+    const headerHeight =
+      document.querySelector('header')?.getBoundingClientRect().height ||
+      (typeof window !== 'undefined' && window.innerWidth < 640 ? 56 : 64);
+    const targetY = Math.max(0, element.getBoundingClientRect().top + window.scrollY - headerHeight);
+
+    const lenis = lenisRef.current;
+    if (lenis) {
+      lenis.scrollTo(targetY, { duration: 0.55 });
+      return;
+    }
+    if (typeof window.scrollTo === 'function') {
+      window.scrollTo({ top: targetY, behavior: 'auto' });
+      return;
+    }
+    if (typeof element.scrollIntoView === 'function') {
       element.scrollIntoView({ behavior: 'auto', block: 'start' });
     }
   }, []);

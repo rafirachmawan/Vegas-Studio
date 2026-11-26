@@ -74,10 +74,17 @@ export function formatTanggalSpreadsheet(dateInput: string): string {
   return trimmed;
 }
 
+export interface DateParts {
+  dayNumber: string;
+  monthShort: string;
+  year: string;
+  weekday: string;
+}
+
 /**
- * Memformat tanggal YYYY-MM-DD atau DD/MM/YYYY ke notasi baca Indonesia (contoh: Rabu, 16 Des 2026).
+ * Mengurai tanggal YYYY-MM-DD atau DD/MM/YYYY menjadi bagian hari, tanggal, bulan, dan tahun Indonesia.
  */
-export function formatTanggalIndonesia(dateStr: string, includeDay = true): string {
+export function getDateParts(dateStr: string): DateParts | null {
   const trimmed = dateStr.trim();
   let year = 0;
   let monthIndex = -1;
@@ -95,7 +102,7 @@ export function formatTanggalIndonesia(dateStr: string, includeDay = true): stri
     monthIndex = Number(slashMatch[2]) - 1;
     year = Number(slashMatch[3]);
   } else {
-    return dateStr;
+    return null;
   }
 
   const dateObj = new Date(Date.UTC(year, monthIndex, day));
@@ -105,15 +112,30 @@ export function formatTanggalIndonesia(dateStr: string, includeDay = true): stri
     monthIndex > 11 ||
     dateObj.getUTCDate() !== day
   ) {
-    return dateStr;
+    return null;
   }
 
-  const bulan = BULAN_PENDEK[monthIndex] ?? '';
-  if (!includeDay) {
-    return `${day} ${bulan} ${year}`;
+  return {
+    dayNumber: String(day).padStart(2, '0'),
+    monthShort: BULAN_PENDEK[monthIndex] ?? '',
+    year: String(year),
+    weekday: HARI_PENUH[dateObj.getUTCDay()] ?? '',
+  };
+}
+
+/**
+ * Memformat tanggal YYYY-MM-DD atau DD/MM/YYYY ke notasi baca Indonesia (contoh: Rabu, 16 Des 2026).
+ */
+export function formatTanggalIndonesia(dateStr: string, includeDay = true): string {
+  const parts = getDateParts(dateStr);
+  if (!parts) {
+    return dateStr;
   }
-  const hari = HARI_PENUH[dateObj.getUTCDay()] ?? '';
-  return `${hari}, ${day} ${bulan} ${year}`;
+  const dayInt = Number.parseInt(parts.dayNumber, 10);
+  if (!includeDay) {
+    return `${dayInt} ${parts.monthShort} ${parts.year}`;
+  }
+  return `${parts.weekday}, ${dayInt} ${parts.monthShort} ${parts.year}`;
 }
 
 export function formatJamSlot(jam: string): string {

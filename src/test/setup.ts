@@ -43,6 +43,10 @@ if (typeof window !== 'undefined') {
     window.ResizeObserver = MockResizeObserver;
   }
 
+  if (typeof window !== 'undefined' && typeof window.scrollTo === 'function') {
+    window.scrollTo = vi.fn();
+  }
+
   if (typeof HTMLElement !== 'undefined' && !HTMLElement.prototype.scrollIntoView) {
     HTMLElement.prototype.scrollIntoView = vi.fn();
   }
