@@ -1,0 +1,9 @@
+/* Hallmark · shape: dark editorial portfolio and booking workbench · genre: editorial · theme: custom · job: book
+ * idea: "Dark charcoal studio portfolio leading directly into an operational schedule sheet synced to WhatsApp" · vibe: "moody charcoal editorial photography studio"
+ * paper: oklch(22% 0.008 70) · accent: oklch(76% 0.145 92) · display: Playfair Display · body: Hanken Grotesk
+ * hero: full-bleed dark camera backdrop · nav: edge-aligned over hero · footer: compact studio colophon · imagery: local placeholders in data-slot · signature: editorial camera hero into auto-filled Jadwal_Wisuda spreadsheet booking
+ * axes: dark/roman-serif/warm · posture: committed · contrast: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P5 H5 E5 S5 R4 V5 · weakest: R, balanced dark gallery placeholders and booking form without adding decorative clutter */
+@import "tailwindcss";
+@import "./tokens.css";
+@import "./base.css" layer(base);
